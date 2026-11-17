@@ -5,3 +5,4 @@ tmp/
 .DS_Store
 output/screenshots/
 output/pdf-pages/
+/dist/

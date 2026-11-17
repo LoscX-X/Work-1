@@ -3,7 +3,7 @@ import { createReadStream, existsSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { extname, resolve, sep } from 'node:path';
 
-const root = fileURLToPath(new URL('./dist/', import.meta.url));
+const root = resolve(fileURLToPath(new URL('./dist/', import.meta.url)));
 const port = Number(process.env.PORT || 4173);
 const contentTypes = {
   '.html': 'text/html; charset=utf-8',

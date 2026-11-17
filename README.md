@@ -12,13 +12,17 @@
 
 ## 本地启动
 
-需要 Node.js 20 或更新版本。项目使用浏览器本地计算，运行时第三方库会随源码一并提供。
+需要 Node.js 22.18 或更新版本。项目采用 React + TypeScript + Vite，数据计算在浏览器本地完成。第三方解析和图表库包含在本地副本中。
 
 ```powershell
+npm ci
+npm run build
 npm start
 ```
 
 浏览器打开 <http://127.0.0.1:4173>。
+
+开发预览使用 `npm run dev`，算法测试使用 `npm test`，类型检查使用 `npm run typecheck`。
 
 ## 开发与证据
 

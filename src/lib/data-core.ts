@@ -219,7 +219,7 @@ export function auditDataset(dataset: Dataset): AuditResult {
   for (const row of dataset.rows) {
     const signature = JSON.stringify(row.values);
     if (firstRows.has(signature)) {
-      addIssue('duplicate', row, null, `与源文件第 ${firstRows.get(signature)} 行完全相同，保留首次记录`, { originalRowId: firstRows.get(signature) });
+      addIssue('duplicate', row, null, `与源记录 ${firstRows.get(signature)} 完全相同，保留首次记录`, { originalRowId: firstRows.get(signature) });
     } else {
       firstRows.set(signature, row.id);
     }
