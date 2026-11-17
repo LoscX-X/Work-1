@@ -1,0 +1,7 @@
+node_modules/
+tmp/
+.cache/
+*.log
+.DS_Store
+output/screenshots/
+output/pdf-pages/
