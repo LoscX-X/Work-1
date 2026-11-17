@@ -1,0 +1,57 @@
+{
+  "pages": 16,
+  "sha256": "8a8b7295d6fb802ae3fa51381ccb6a7d72a341cce0ae18821be96fb6091bb186",
+  "bytes": 630181,
+  "render_dpi": 120,
+  "visually_inspected_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "reinspected_after_changes": [
+    1,
+    3,
+    4,
+    6,
+    14,
+    16
+  ],
+  "page_text_lengths": [
+    370,
+    585,
+    754,
+    630,
+    451,
+    610,
+    311,
+    594,
+    394,
+    437,
+    533,
+    662,
+    604,
+    660,
+    599,
+    766
+  ],
+  "missing_non_ascii_body_glyphs": [],
+  "visual_findings_resolved": [
+    "ASCII minus for an unsupported font glyph",
+    "keep environment filenames in the code block",
+    "clarify architecture data flow"
+  ],
+  "visual_result": "No clipping, overlapping content, missing body glyphs, or unintended extra pages observed."
+}

@@ -91,6 +91,7 @@ npm run dev
 npm run check
 npm run format:check
 python tools/verify_export_evidence.py
+python tools/verify_export_evidence.py --scenario final
 ```
 
 `check` 包含类型检查、25 项测试和生产构建。Python 命令只用标准库交叉核对保存的实际浏览器导出文件，不是自动浏览器测试框架。

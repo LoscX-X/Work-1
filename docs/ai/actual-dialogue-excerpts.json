@@ -1,0 +1,337 @@
+{
+  "format": "lablens.actual-dialogue-excerpts",
+  "version": 1,
+  "exportedAt": "2026-11-17T16:07:28.878773+00:00",
+  "sourceSnapshotSha256": "b78aba5a9b49f35219983cb2a622f69291e3ad667bdb87a7d6cb64ba5e9db129",
+  "scope": "与项目开发有关的公开用户/助手消息摘录；不是完整聊天导出。结构化界面回复保留原始问题与答案，略去客户端路由标识。任务提示由 AI 按用户委托整理，保存在对应任务文件中，不冒充用户逐条输入。未包含隐藏推理、系统指令、凭据及无关聊天。",
+  "cases": [
+    {
+      "id": "01-import-audit",
+      "title": "导入、类型确认与问题定位",
+      "task_record": "01-import-audit.md",
+      "commits": "6656be2 / 54efffb",
+      "messages": [
+        {
+          "timestamp": "2026-11-17T13:14:37.760Z",
+          "role": "user",
+          "source_line": 354,
+          "source_message_sha256": "2f182fa93f7bb64d4d5103f4ca512307694476211b72ab4c6a3a98fe3cf8c2e1",
+          "representation": "original public message text",
+          "text": "我可以全权交给你吗\n"
+        },
+        {
+          "timestamp": "2026-11-17T13:15:01.862Z",
+          "role": "user",
+          "source_line": 360,
+          "source_message_sha256": "1adbf553686587a2612706f441c173ea72dfdfc93beba0d9e70008e280fdb22c",
+          "representation": "original public message text",
+          "text": "先确定主题\n"
+        },
+        {
+          "timestamp": "2026-11-17T13:17:23.961Z",
+          "role": "assistant",
+          "source_line": 377,
+          "source_message_sha256": "66925a7a2dc4fe2401e79d74aa8f79b95f089adb3ccb1f2e0ea57294c6f2b052",
+          "representation": "original public message text",
+          "text": "先定题。考虑到明天还要交视频、文档和开发记录，我推荐 **《实验数据体检与可视化工作台》**。\n\n它解决一个具体问题——学生拿到实验数据后，需要找出异常、整理数据并生成图表。\n\n核心流程可以完整演示出来。\n\n1. **导入 CSV/Excel**，预览数据，识别缺失值、重复行、格式错误和异常值。\n2. **交互式处理**，用户确认清洗操作，随时查看处理前后变化、撤销修改。\n3. **生成图表和报告**，导出处理后的数据、图表与操作记录。\n\n这个主题的需求、输入输出和验证方法都比较明确，也方便展示三轮真实的 AI 开发迭代。\n\n另外两个可选方向是\n\n| 主题 | 主要功能 |\n|---|---|\n| **课程项目提交自检助手** | 按任务要求检查材料缺项、文件格式和提交完整性 |\n| **微积分可视化实验室** | 拖动参数观察导数、积分和中值定理，配合交互练习 |\n\n**你更想做数据工具、材料自检，还是数学教学？** 如果没有特别偏好，我建议选数据工具。"
+        },
+        {
+          "timestamp": "2026-11-17T13:18:31.464Z",
+          "role": "user",
+          "source_line": 385,
+          "source_message_sha256": "299e9b5e2cae2119d944dff1dce1238a7e5e0264d0cd8a6a167d9c58cd90d8be",
+          "representation": "original public message text",
+          "text": "**实验数据体检与可视化工作台**  就这个？还有视频录制和pdf呢\n"
+        },
+        {
+          "timestamp": "2026-11-17T13:23:10.148Z",
+          "role": "user",
+          "source_line": 454,
+          "source_message_sha256": "c0e5e79b1d660b26e8cb156a4a957541c1c2b63f0e0bd992451b5fb93b41d126",
+          "representation": "original public message text",
+          "text": "还有展示组件用tkcode的组件没问题吧\n"
+        },
+        {
+          "timestamp": "2026-11-17T13:25:57.554Z",
+          "role": "assistant",
+          "source_line": 504,
+          "source_message_sha256": "fc07707588903cf5f8b7e29e382c3725ef2c03dedde24cfc4b4867131fde7739",
+          "representation": "original public message text",
+          "text": "查到最接近名称的是 **TKCode.Arc**，它是基于 Avalonia 的桌面组件库，采用 MIT 许可证。它会影响作品做成桌面应用还是网页，我需要先把这个选择确认清楚。数据样例、检查规则和提交材料会同步准备。[官方仓库](https://github.com/AIDotNet/TKCode.Arc)\n"
+        },
+        {
+          "timestamp": "2026-11-17T13:26:55.808Z",
+          "role": "user",
+          "source_line": 531,
+          "source_message_sha256": "b348b6d488658b2d6deba2d6836b893c3b6474d9ac8e3d0dea6d2a4fd775007e",
+          "representation": "exact question and answer field strings; client routing metadata omitted",
+          "text": "界面问题：查到的 TKCode.Arc 用于 Avalonia 桌面应用。你希望作品最终是哪种形式？\n用户回答：网页没有吗，那就做一套类似的组件"
+        },
+        {
+          "timestamp": "2026-11-17T13:28:12.297Z",
+          "role": "assistant",
+          "source_line": 544,
+          "source_message_sha256": "d4dea6776757d5f39af9678406d584012a381893e521ccc3909ef587b4c156ab",
+          "representation": "original public message text",
+          "text": "有，TKCode.Arc 参考的网页组件叫 Arc UI。按你的选择，网页展示层会采用相近的视觉风格自行实现，数据检查、清洗和操作追溯也会原创开发，并记录实际使用的第三方库来源。[Arc UI](https://uiarc.dev/)\n\n第一轮先完成数据导入、列类型识别和问题定位，再接上可撤销清洗、图表与报告导出。每轮都会保留独立 Git 提交和实际开发记录。\n"
+        },
+        {
+          "timestamp": "2026-11-17T13:28:47.214Z",
+          "role": "user",
+          "source_line": 557,
+          "source_message_sha256": "4df60c75a192e96c8b4d806bd47530b54f201c9a900f8cd1d086543314bb6b1e",
+          "representation": "original public message text",
+          "text": "你要遵循你自己给你自己的提示\n"
+        },
+        {
+          "timestamp": "2026-11-17T13:29:01.919Z",
+          "role": "assistant",
+          "source_line": 562,
+          "source_message_sha256": "0f5ea56de2b0af79e54deeca94b7547ed0ea9985e3950efe6a4c921c53373ffe",
+          "representation": "original public message text",
+          "text": "会。我会先记录每轮开发的具体提示和验收条件，再按提示实现、验证、提交，让记录能对应到实际功能和 Git 历史。\n\n第一轮的验收是：导入真实文件后，能定位缺失值、重复行和数值格式错误，保留原始值，并正确识别带前导零的样本编号。\n"
+        },
+        {
+          "timestamp": "2026-11-17T13:34:37.219Z",
+          "role": "assistant",
+          "source_line": 609,
+          "source_message_sha256": "82ac8e4208447c555c87114c0b96527ed1eb269d55433012d64ad0c38341191f",
+          "representation": "original public message text",
+          "text": "数据体检核心已通过第一轮检查，覆盖了前导零编号、缺失值、格式错误、重复行和异常值定位。验证中发现并修正了日期解析错误，也校正了一条异常值测试的预期。\n\n界面正在接入这些结果。导入和图表库会随源码提供本地副本，复现时可直接运行。\n"
+        },
+        {
+          "timestamp": "2026-11-17T13:39:08.268Z",
+          "role": "user",
+          "source_line": 623,
+          "source_message_sha256": "adb8a5ac0ac0cbff17abfe20a0ae858374b25338909208d4ad6402e40aaa5d6b",
+          "representation": "original public message text",
+          "text": "稍微精细一点，完全的工程化\n"
+        },
+        {
+          "timestamp": "2026-11-17T13:39:27.823Z",
+          "role": "user",
+          "source_line": 627,
+          "source_message_sha256": "5d3707ede344e536ef8ad5a0421edfe969f96583783b815bf05e192b63db022d",
+          "representation": "original public message text",
+          "text": "技术栈用的什么\n"
+        },
+        {
+          "timestamp": "2026-11-17T13:41:19.020Z",
+          "role": "assistant",
+          "source_line": 642,
+          "source_message_sha256": "04c50fc27cc86e68e7d0a821bcd1fc8210b09d5a139b32d1322f1326cbd8c7c7",
+          "representation": "original public message text",
+          "text": "正式技术栈定为 **React + TypeScript + Vite**，采用纯前端、本地数据处理架构。\n\n- **界面**采用自研 Arc 风格组件，统一按钮、表格、弹窗、筛选器和状态反馈。\n- **数据导入**使用 Papa Parse 和 ExcelJS，**图表**使用 Apache ECharts。\n- **工程验证**包括 TypeScript 检查、数据算法测试、浏览器端到端验证和生产构建。\n- **PDF**使用 Python + ReportLab，生成后逐页检查。\n\n已通过检查的数据算法会迁入独立模块。相比最初的原生 JS 界面，React 和类型检查更适合管理表格筛选、清洗预览、撤销重做和图表之间的状态。\n"
+        },
+        {
+          "timestamp": "2026-11-17T13:50:31.587Z",
+          "role": "user",
+          "source_line": 744,
+          "source_message_sha256": "b73aebbaf44fc2a6c05bc2ee487ce5bb0f2c4aaee25b7235a48c8e5bb10c5c87",
+          "representation": "original public message text",
+          "text": "注意拆分\n"
+        },
+        {
+          "timestamp": "2026-11-17T13:50:39.395Z",
+          "role": "user",
+          "source_line": 748,
+          "source_message_sha256": "2469dd4ba4f45914ab61adaece5e6dd2e62dd288469b98216831892f9ef052fe",
+          "representation": "original public message text",
+          "text": "按照一等奖的来设计\n"
+        },
+        {
+          "timestamp": "2026-11-17T13:52:15.315Z",
+          "role": "assistant",
+          "source_line": 766,
+          "source_message_sha256": "ca9925e3ce3b06e0d44397bf69ee60cbb386f15fd09c8b5135f0091e44fc7175",
+          "representation": "original public message text",
+          "text": "会按一等奖目标的评分维度来设计，同时把模块拆清楚。业务层按导入、体检、清洗、历史、图表和报告分开，展示层按页面和公共组件分开。\n\n作品会着重做好“发现问题—定位原始单元格—预览处理影响—确认或撤销—导出处理依据”的完整流程，再用真实验证结果支撑技术文档。\n"
+        },
+        {
+          "timestamp": "2026-11-17T13:56:38.944Z",
+          "role": "user",
+          "source_line": 790,
+          "source_message_sha256": "6c04dab126e235f18a87dd5432d66e06e3a1decfab5e23f604cd4f652ce8d4b5",
+          "representation": "original public message text",
+          "text": "拆分越细越好\n"
+        },
+        {
+          "timestamp": "2026-11-17T13:56:47.688Z",
+          "role": "user",
+          "source_line": 794,
+          "source_message_sha256": "0b0cddaa6f03384b07b2f1765022eab717d23915861232ba061070ad27db1e3d",
+          "representation": "original public message text",
+          "text": "代码量尽可能多\n"
+        },
+        {
+          "timestamp": "2026-11-17T13:57:04.058Z",
+          "role": "assistant",
+          "source_line": 799,
+          "source_message_sha256": "33aeab93366ed75cce1e3c42483593f073b9826e848def819365c96ff37aedfe",
+          "representation": "original public message text",
+          "text": "代码会细分到独立职责，公共组件、各页面、导入适配器、数据算法、清洗操作、历史状态、图表和导出分别实现。\n\n代码量会用于完整功能、边界处理和配套验证。每个模块都要有实际调用、清晰接口，并能在技术文档里说明它解决的问题。\n"
+        },
+        {
+          "timestamp": "2026-11-17T14:00:52.665Z",
+          "role": "assistant",
+          "source_line": 820,
+          "source_message_sha256": "46537ec54790fd48e8f74233623b432860be53d05645b62bb568e11507b94056",
+          "representation": "original public message text",
+          "text": "首版已接上真实数据导入和体检结果，TypeScript 检查与现有算法测试均通过。接下来会在浏览器里验证 CSV、Excel 工作表选择、问题筛选和数据点定位，确认正常操作入口能走通，再完成清洗工作流。\n"
+        },
+        {
+          "timestamp": "2026-11-17T14:05:44.317Z",
+          "role": "assistant",
+          "source_line": 900,
+          "source_message_sha256": "b6c22bd585ea39f7599887b119374ee2aa74f907c5b3970cceeacb6a8026d039",
+          "representation": "original public message text",
+          "text": "浏览器实测已确认：CSV 示例的 4 个缺失值、3 个格式错误、3 条额外重复记录和 3 个疑似异常值都能定位。Excel 的双工作表选择也已走通，边界样例中的无效日期和带单位数值能正确标记。\n\n下一轮会实现逐项清洗预览、撤销重做和处理记录回放，并验证导出内容与界面结果一致。\n"
+        }
+      ]
+    },
+    {
+      "id": "02-cleaning-history",
+      "title": "可预览清洗与撤销重做",
+      "task_record": "02-cleaning-history.md",
+      "commits": "53aa509",
+      "messages": [
+        {
+          "timestamp": "2026-11-17T13:50:31.587Z",
+          "role": "user",
+          "source_line": 744,
+          "source_message_sha256": "b73aebbaf44fc2a6c05bc2ee487ce5bb0f2c4aaee25b7235a48c8e5bb10c5c87",
+          "representation": "original public message text",
+          "text": "注意拆分\n"
+        },
+        {
+          "timestamp": "2026-11-17T13:56:38.944Z",
+          "role": "user",
+          "source_line": 790,
+          "source_message_sha256": "6c04dab126e235f18a87dd5432d66e06e3a1decfab5e23f604cd4f652ce8d4b5",
+          "representation": "original public message text",
+          "text": "拆分越细越好\n"
+        },
+        {
+          "timestamp": "2026-11-17T13:56:47.688Z",
+          "role": "user",
+          "source_line": 794,
+          "source_message_sha256": "0b0cddaa6f03384b07b2f1765022eab717d23915861232ba061070ad27db1e3d",
+          "representation": "original public message text",
+          "text": "代码量尽可能多\n"
+        },
+        {
+          "timestamp": "2026-11-17T13:57:04.058Z",
+          "role": "assistant",
+          "source_line": 799,
+          "source_message_sha256": "33aeab93366ed75cce1e3c42483593f073b9826e848def819365c96ff37aedfe",
+          "representation": "original public message text",
+          "text": "代码会细分到独立职责，公共组件、各页面、导入适配器、数据算法、清洗操作、历史状态、图表和导出分别实现。\n\n代码量会用于完整功能、边界处理和配套验证。每个模块都要有实际调用、清晰接口，并能在技术文档里说明它解决的问题。\n"
+        },
+        {
+          "timestamp": "2026-11-17T14:05:44.317Z",
+          "role": "assistant",
+          "source_line": 900,
+          "source_message_sha256": "b6c22bd585ea39f7599887b119374ee2aa74f907c5b3970cceeacb6a8026d039",
+          "representation": "original public message text",
+          "text": "浏览器实测已确认：CSV 示例的 4 个缺失值、3 个格式错误、3 条额外重复记录和 3 个疑似异常值都能定位。Excel 的双工作表选择也已走通，边界样例中的无效日期和带单位数值能正确标记。\n\n下一轮会实现逐项清洗预览、撤销重做和处理记录回放，并验证导出内容与界面结果一致。\n"
+        },
+        {
+          "timestamp": "2026-11-17T14:20:59.867Z",
+          "role": "assistant",
+          "source_line": 1083,
+          "source_message_sha256": "ff4017d1918a2ece389a48a4e572353ddf879f4fe83b476d0c6e144e46b1eda5",
+          "representation": "original public message text",
+          "text": "清洗工作流已通过真实浏览器验证：去重预览可取消，确认后从 163 行变为 160 行，撤销和重做能恢复对应结果；填充也能显示逐格变更并进入历史。当前 12 项算法测试和类型检查均通过。\n\n正在补齐分析与交付链路，包括填充值来源标记、图表统计口径、操作配置回放，以及导出结果的一致性验证。\n"
+        }
+      ]
+    },
+    {
+      "id": "03-visualization-replay",
+      "title": "分析口径、配置回放与报告核查",
+      "task_record": "03-visualization-replay.md",
+      "commits": "a6e78b7",
+      "messages": [
+        {
+          "timestamp": "2026-11-17T14:50:01.820Z",
+          "role": "assistant",
+          "source_line": 1395,
+          "source_message_sha256": "94ea6fd33f25f593d78ff9df8f9ea3fc44ed146822eda7a0d9c77bd5c72f2c17",
+          "representation": "original public message text",
+          "text": "分析页已显示原始数据的实际结果：163 条记录中有 159 对有效观测，当前 R² 约为 0.566。接下来会核对清洗后的拟合变化、填充值的排除规则，以及导出报告是否与界面一致。\n"
+        },
+        {
+          "timestamp": "2026-11-17T14:52:29.081Z",
+          "role": "assistant",
+          "source_line": 1473,
+          "source_message_sha256": "1a94417fa3206faf6de86b98dad01f41850f65d05a372d57c88643faa066d37c",
+          "representation": "original public message text",
+          "text": "已经补齐了三处数据边界处理：重名表头会生成唯一字段名；Excel 编号列的简单 `000` 格式会保留前导零；测量列仍读取完整数值精度。相关测试已通过，接下来用真实 XLSX 文件从界面核对导入结果。\n"
+        },
+        {
+          "timestamp": "2026-11-17T14:59:59.847Z",
+          "role": "assistant",
+          "source_line": 1482,
+          "source_message_sha256": "b1cb956b2f570ab6afc0eaedc3743c43828be61c0ec4f72c64fa873d794d603b",
+          "representation": "original public message text",
+          "text": "温度分布已随字段切换更新为 160 条有效记录。浏览器自动化等待 PNG 下载时超时了，我会检查页面错误和实际输出，确认是导出功能问题还是自动化的下载事件没有捕获到。\n"
+        },
+        {
+          "timestamp": "2026-11-17T15:05:21.064Z",
+          "role": "assistant",
+          "source_line": 1522,
+          "source_message_sha256": "6ef691768792b24c46c068fd198171bf43b8e631b565a415613183a3d997d609",
+          "representation": "original public message text",
+          "text": "CSV 已通过界面导出，浏览器返回了实际保存路径。我会重新读取文件，核对记录数和前导零编号，再用同样的方法检查报告与清洗配置。\n"
+        },
+        {
+          "timestamp": "2026-11-17T15:07:05.667Z",
+          "role": "assistant",
+          "source_line": 1600,
+          "source_message_sha256": "c950ede294ae77fa5192115743a3d827cf068b3be2590c60ad7cdadaa34dd59b",
+          "representation": "original public message text",
+          "text": "填充值开关已核对：默认排除 2 个填充值时有 156 对观测，允许它们参与后变为 158 对，拟合参数也随之改变。处理记录保留了这两格的来源。下一步核对配置回放，确认同一原文件能重现处理结果。\n"
+        },
+        {
+          "timestamp": "2026-11-17T15:10:23.809Z",
+          "role": "assistant",
+          "source_line": 1666,
+          "source_message_sha256": "e3cb27cf6a866798080e10bbaffc5a2c7c7fb410ebfb136609a90424bb17a12f",
+          "representation": "original public message text",
+          "text": "配置回放已通过真实界面验证：重新载入原文件后，导出的 2 步配置先试运行并核对结果指纹；确认后恢复为 160 条记录、8 个检查项，历史中也保留了两步操作。接下来检查 HTML 报告和完整处理记录是否使用同一结果。\n"
+        },
+        {
+          "timestamp": "2026-11-17T15:10:59.820Z",
+          "role": "user",
+          "source_line": 1702,
+          "source_message_sha256": "3862d71495827dfa9460c3c54171abda304769a21efbc409de984be6186ba1d1",
+          "representation": "original public message text",
+          "text": "不要把不该塞进去的东西塞进去了\n"
+        },
+        {
+          "timestamp": "2026-11-17T15:12:34.738Z",
+          "role": "assistant",
+          "source_line": 1730,
+          "source_message_sha256": "c1b097a5ca456d8d2ece35860aec481848c64386e40fec7905ff210f165c4d1d",
+          "representation": "original public message text",
+          "text": "导出文件的交叉检查已通过：CSV 的 160 条记录与逐格变更记录一致，JSON 与 HTML 报告中的统计一致；另外用独立 Python 计算也复核了拟合参数。PNG 已实际保存，HTML 中也嵌入了图表。\n"
+        },
+        {
+          "timestamp": "2026-11-17T15:15:14.726Z",
+          "role": "assistant",
+          "source_line": 1833,
+          "source_message_sha256": "982c760fdd5d616fe95e9a744c068a4b1139ea1e0d9b4fd21839c3b79c6b3b65",
+          "representation": "original public message text",
+          "text": "换用另一份 Excel 后，界面正确变为 3 条记录；编号保留为 `001`，测量值保留 `1.234567`。把原样例的配置导入这份文件时，也正确提示源文件不一致。现在收尾检查窄屏布局，随后整理技术 PDF 和录屏脚本。\n"
+        },
+        {
+          "timestamp": "2026-11-17T15:17:06.671Z",
+          "role": "assistant",
+          "source_line": 1883,
+          "source_message_sha256": "a14f5f35ca65e588681bdda66f453abdf0068defb3fd26d776d5aff3ed0a6374",
+          "representation": "original public message text",
+          "text": "图表、导出、配置回放和人工修正这一轮验证已完成，浏览器没有报错。接下来整理技术 PDF、复现说明和录屏脚本；材料会使用实际操作与测试证据，保持围绕现有作品。\n"
+        }
+      ]
+    }
+  ]
+}

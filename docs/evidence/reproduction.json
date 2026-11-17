@@ -1,0 +1,21 @@
+{
+  "sourceCommit": "2f579cc2e600191b17f274c22e07a0d98d26ac2d",
+  "cloneKind": "Fresh local Git clone with no shared node_modules",
+  "node": "v22.19.0",
+  "npm": "10.9.3",
+  "dependencyInstallReportedSeconds": 4,
+  "checkAndFormatSeconds": 12.16,
+  "checkExitCode": 0,
+  "formatExitCode": 0,
+  "tests": 25,
+  "passed": 25,
+  "productionBrowser": "not verified: saved browser permission denied the origin even after user authorization",
+  "commands": [
+    "npm ci --no-audit --no-fund",
+    "npm run check",
+    "npm run format:check"
+  ],
+  "measuredAt": "2026-11-17T23:46:56.2193922+08:00",
+  "productionStart": "npm start succeeded; bound to 127.0.0.1:4174 using .env",
+  "limits": "Fresh clone and command checks passed; browser workflow evidence is from the development service, not the production origin."
+}
