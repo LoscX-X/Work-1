@@ -46,20 +46,18 @@ export function buildAuditRecord(history: HistoryState, settings: ChartSettings)
         summary: originalAnalysis.summary,
       },
     },
-    operations: history.entries
-      .slice(0, history.cursor)
-      .map((entry, index) => ({
-        step: index + 1,
-        id: entry.id,
-        timestamp: entry.timestamp,
-        title: entry.result.title,
-        description: entry.result.description,
-        parameters: entry.result.operation,
-        changedCells: entry.result.changedCells,
-        removedSourceRecordIds: entry.result.removedRowIds,
-        schemaChanged: entry.result.schemaChanged,
-        rowsAfter: entry.result.dataset.rows.length,
-      })),
+    operations: history.entries.slice(0, history.cursor).map((entry, index) => ({
+      step: index + 1,
+      id: entry.id,
+      timestamp: entry.timestamp,
+      title: entry.result.title,
+      description: entry.result.description,
+      parameters: entry.result.operation,
+      changedCells: entry.result.changedCells,
+      removedSourceRecordIds: entry.result.removedRowIds,
+      schemaChanged: entry.result.schemaChanged,
+      rowsAfter: entry.result.dataset.rows.length,
+    })),
     lineage: Array.from(deriveLineage(history), ([cell, provenance]) => ({ cell, ...provenance })),
     replay: history.replay || null,
     methods: {
