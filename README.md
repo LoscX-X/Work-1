@@ -30,6 +30,8 @@ npm start
 
 打开 <http://127.0.0.1:4173/>。首次安装依赖需要网络；构建后的应用使用随包保留的本地图表与解析库。
 
+交付 ZIP 内还保留 main 的完整离线 Git 历史，可在解压目录执行 `git clone --branch main LabLens-history.bundle restored-source` 恢复查看。
+
 ### 复现检查点
 
 1. 首页示例应显示 **163 行、6 列、13 个检查项**。
@@ -97,6 +99,8 @@ python tools/verify_export_evidence.py --scenario final
 `check` 包含类型检查、25 项测试和生产构建。Python 命令只用标准库交叉核对保存的实际浏览器导出文件，不是自动浏览器测试框架。
 
 已完成正常界面的真实导入、问题定位、清洗预览/取消/确认、撤销重做、填充来源、图表切换、配置回放、错误源拒绝及文件下载检查。覆盖范围、证据和未覆盖环境见 [验证记录](docs/validation.md)。
+
+[GitHub 自动检查](https://github.com/LoscX-X/Work-1/actions/workflows/check.yml) 在推送时执行类型、测试、构建、格式及两种导出场景核查；已完成的运行快照见 `docs/evidence/ci-status.json`。这些检查不包含自动浏览器交互。
 
 ## 使用边界
 
