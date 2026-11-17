@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Apache ECharts",
+    "version": "6.0.0",
+    "source": "https://registry.npmjs.org/echarts/-/echarts-6.0.0.tgz",
+    "license": "Apache-2.0",
+    "file": "echarts.min.js",
+    "sha256": "baa8dfe7e1d9336b98e8986ba7e20ea15e7cdbea1ef42a59d59478632fa45a1d"
+  },
+  {
+    "name": "Papa Parse",
+    "version": "5.5.3",
+    "source": "https://registry.npmjs.org/papaparse/-/papaparse-5.5.3.tgz",
+    "license": "MIT",
+    "file": "papaparse.min.js",
+    "sha256": "3553fb8bdf5b8004ce5531e6827e81c8b34e7b3992677967754544064e97b016"
+  },
+  {
+    "name": "ExcelJS",
+    "version": "4.4.0",
+    "source": "https://registry.npmjs.org/exceljs/-/exceljs-4.4.0.tgz",
+    "license": "MIT",
+    "file": "exceljs.min.js",
+    "sha256": "7e49da68588e250dbb8bba190d2caa8ab3787cc0284bda1d8b2f805c4df742c9"
+  }
+]
