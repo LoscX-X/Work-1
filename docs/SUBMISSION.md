@@ -7,14 +7,14 @@
 | 材料 | 交付位置 | 核对方式 |
 | --- | --- | --- |
 | 源码与真实开发历史 | https://github.com/LoscX-X/Work-1 | 仓库 main、逐步提交与 README。 |
-| 技术 PDF | `output/pdf/LabLens-Technical-Documentation.pdf` | 最终生成后逐页渲染检查，页数写入交付校验记录。 |
+| 技术 PDF | `output/pdf/LabLens-Technical-Documentation.pdf` | 16 页，已逐页渲染检查，记录见 `docs/evidence/pdf-validation.json`。 |
 | 核心 AI 迭代 | `docs/ai/01`、`02`、`03` 及实际公开对话摘录 | 任务、真实修复、验证和对应 Git 提交相互对应。 |
 | 十分钟复现 | `README.md`、`.env.example`、`Start-LabLens.cmd` | 源码构建或含 dist 的预构建包。 |
 | 样例与清洗配置 | `public/samples/` | 163 行原样例，七步配置回放后 150 行。 |
 | 实际导出与验证 | `docs/evidence/`、`docs/validation.md` | 浏览器实际文件、独立统计核查和覆盖边界。 |
 | 视频 | 参赛者录制的 `LabLens-demo.mp4` | 5—8 分钟、1080p、至少 2 分钟实际 AI 协作过程。 |
 
-完整本地交付包和校验和位于 `output/release/`，在项目收尾时生成；该目录不作为源码重复提交到 Git。
+完整本地交付包、版本清单和校验和位于 `output/release/`，由 `tools/package_release.py` 从干净 Git 当前树和新构建 dist 生成。ZIP 内附离线 main 历史和逐文件校验和，已经完成实际读取与克隆核对；该目录不作为源码重复提交到 Git。
 
 ## 提交前由参赛者完成
 
