@@ -1,0 +1,74 @@
+{
+  "format": "lablens.recipe",
+  "version": 1,
+  "algorithmVersion": 1,
+  "generatedAt": "2026-11-17T15:27:47.630Z",
+  "source": {
+    "sha256": "660a7b924e3ad2c5d60ea7fb8ce3c76a60779a1c2beb05569e277554e048c483",
+    "filename": "传感器标定实验.csv",
+    "sheet": null,
+    "rowCount": 163,
+    "columns": [
+      "样本编号",
+      "时间_s",
+      "参考压力_kPa",
+      "传感器输出_mV",
+      "温度_℃",
+      "实验组"
+    ]
+  },
+  "operations": [
+    {
+      "timestamp": "2026-11-17T15:26:43.481Z",
+      "parameters": {
+        "kind": "trim",
+        "columnId": null
+      }
+    },
+    {
+      "timestamp": "2026-11-17T15:26:44.509Z",
+      "parameters": {
+        "kind": "remove_duplicates"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T15:26:45.624Z",
+      "parameters": {
+        "kind": "invalid_to_missing",
+        "columnId": 3
+      }
+    },
+    {
+      "timestamp": "2026-11-17T15:26:55.886Z",
+      "parameters": {
+        "kind": "invalid_to_missing",
+        "columnId": 4
+      }
+    },
+    {
+      "timestamp": "2026-11-17T15:26:56.923Z",
+      "parameters": {
+        "kind": "drop_missing",
+        "columnId": null
+      }
+    },
+    {
+      "timestamp": "2026-11-17T15:26:58.038Z",
+      "parameters": {
+        "kind": "drop_outliers",
+        "columnId": 3
+      }
+    },
+    {
+      "timestamp": "2026-11-17T15:26:59.152Z",
+      "parameters": {
+        "kind": "drop_outliers",
+        "columnId": 4
+      }
+    }
+  ],
+  "expected": {
+    "rows": 150,
+    "fingerprint": "f57b8f8f66da9350c9cc7856399ae7d53b21b4748c172a8121beaf4effd28454"
+  }
+}

@@ -2,7 +2,9 @@ node_modules/
 tmp/
 .cache/
 *.log
+.env
 .DS_Store
 output/screenshots/
 output/pdf-pages/
 /dist/
+/output/release/

@@ -18,6 +18,9 @@ export function OperationPreview({
   onClose(): void;
 }) {
   const changed = result.changedCells.length || result.removedRowIds.length || result.schemaChanged;
+  const showBoundaries = result.operation.kind === 'trim';
+  const displayValue = (value: string) =>
+    showBoundaries ? JSON.stringify(value) : value || '空值';
   return (
     <Modal
       title={`预览 · ${result.title}`}
@@ -81,12 +84,17 @@ export function OperationPreview({
                   <td>
                     #{cell.rowId} · {cell.column}
                   </td>
-                  <td>{cell.before || '空值'}</td>
-                  <td>{cell.after || '空值'}</td>
+                  <td>
+                    <span className="preview-value">{displayValue(cell.before)}</span>
+                  </td>
+                  <td>
+                    <span className="preview-value">{displayValue(cell.after)}</span>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          {showBoundaries && <p className="helper">引号内保留首尾空白，方便核对文本边界。</p>}
           {result.changedCells.length > 6 && (
             <p className="helper">显示前 6 处变更，完整变更会保留在处理记录中。</p>
           )}

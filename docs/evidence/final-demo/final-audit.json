@@ -1,0 +1,343 @@
+{
+  "format": "lablens.audit-record",
+  "version": 1,
+  "generatedAt": "2026-11-17T15:27:48.198Z",
+  "source": {
+    "filename": "传感器标定实验.csv",
+    "bytes": 5739,
+    "sha256": "660a7b924e3ad2c5d60ea7fb8ce3c76a60779a1c2beb05569e277554e048c483",
+    "importedAt": "2026-11-17T15:25:01.610Z",
+    "encoding": "UTF-8",
+    "delimiter": ",",
+    "format": "csv",
+    "sample": true
+  },
+  "schema": [
+    {
+      "id": 0,
+      "name": "样本编号",
+      "type": "text"
+    },
+    {
+      "id": 1,
+      "name": "时间_s",
+      "type": "number"
+    },
+    {
+      "id": 2,
+      "name": "参考压力_kPa",
+      "type": "number"
+    },
+    {
+      "id": 3,
+      "name": "传感器输出_mV",
+      "type": "number"
+    },
+    {
+      "id": 4,
+      "name": "温度_℃",
+      "type": "number"
+    },
+    {
+      "id": 5,
+      "name": "实验组",
+      "type": "text"
+    }
+  ],
+  "before": {
+    "rows": 163,
+    "issueCounts": {
+      "missing": 4,
+      "invalid": 3,
+      "duplicate": 3,
+      "outlier": 3
+    },
+    "affectedCells": 28,
+    "qualityReference": 97
+  },
+  "after": {
+    "rows": 150,
+    "issueCounts": {
+      "missing": 0,
+      "invalid": 0,
+      "duplicate": 0,
+      "outlier": 0
+    },
+    "affectedCells": 0,
+    "qualityReference": 100
+  },
+  "analysis": {
+    "settings": {
+      "kind": "scatter",
+      "xColumnId": 2,
+      "yColumnId": 3,
+      "groupColumnId": 5,
+      "showFit": true,
+      "excludeImputed": true,
+      "bins": 12
+    },
+    "xName": "参考压力_kPa",
+    "yName": "传感器输出_mV",
+    "used": 150,
+    "excluded": {
+      "missing": 0,
+      "invalid": 0,
+      "imputed": 0
+    },
+    "summary": {
+      "count": 150,
+      "min": 18.179,
+      "max": 195.997,
+      "mean": 108.59725333333337,
+      "median": 109.5095,
+      "q1": 64.29675,
+      "q3": 154.16125,
+      "sd": 52.581175113194114
+    },
+    "regression": {
+      "count": 150,
+      "slope": 1.8745934028014113,
+      "intercept": 8.748910326518972,
+      "correlation": 0.9999088463668033,
+      "r2": 0.9998177010425915
+    },
+    "original": {
+      "used": 159,
+      "excluded": {
+        "missing": 2,
+        "invalid": 2,
+        "imputed": 0
+      },
+      "regression": {
+        "count": 159,
+        "slope": 1.7927742676828693,
+        "intercept": 15.152500871316914,
+        "correlation": 0.7522074717066263,
+        "r2": 0.565816080491275
+      },
+      "summary": {
+        "count": 159,
+        "min": -120,
+        "max": 580,
+        "mean": 110.35896226415089,
+        "median": 110.323,
+        "q1": 63.897999999999996,
+        "q3": 155.05450000000002,
+        "sd": 67.02586125942872
+      }
+    }
+  },
+  "operations": [
+    {
+      "step": 1,
+      "id": "9741a5e7-7aeb-470e-84c7-01b7fa7a1355",
+      "timestamp": "2026-11-17T15:26:43.481Z",
+      "title": "清除首尾空白",
+      "description": "全部字段，保留单元格内部字符与原始记录标识",
+      "parameters": {
+        "kind": "trim",
+        "columnId": null
+      },
+      "changedCells": [
+        {
+          "rowId": 10,
+          "columnId": 5,
+          "column": "实验组",
+          "before": " A 组 ",
+          "after": "A 组"
+        },
+        {
+          "rowId": 61,
+          "columnId": 5,
+          "column": "实验组",
+          "before": "A 组  ",
+          "after": "A 组"
+        }
+      ],
+      "removedSourceRecordIds": [],
+      "schemaChanged": false,
+      "rowsAfter": 163
+    },
+    {
+      "step": 2,
+      "id": "304d7d0b-f507-43fb-b08e-4351f810b150",
+      "timestamp": "2026-11-17T15:26:44.509Z",
+      "title": "移除额外重复记录",
+      "description": "按当前整行值精确比较，保留首次出现的记录",
+      "parameters": {
+        "kind": "remove_duplicates"
+      },
+      "changedCells": [],
+      "removedSourceRecordIds": [
+        162,
+        163,
+        164
+      ],
+      "schemaChanged": false,
+      "rowsAfter": 160
+    },
+    {
+      "step": 3,
+      "id": "cb26ff3b-8983-41a5-bbab-f1a2312c51f4",
+      "timestamp": "2026-11-17T15:26:45.624Z",
+      "title": "格式错误转为空值",
+      "description": "传感器输出_mV，清空无法按当前类型解析的值",
+      "parameters": {
+        "kind": "invalid_to_missing",
+        "columnId": 3
+      },
+      "changedCells": [
+        {
+          "rowId": 33,
+          "columnId": 3,
+          "column": "传感器输出_mV",
+          "before": "ERR",
+          "after": ""
+        },
+        {
+          "rowId": 89,
+          "columnId": 3,
+          "column": "传感器输出_mV",
+          "before": "等待校准",
+          "after": ""
+        }
+      ],
+      "removedSourceRecordIds": [],
+      "schemaChanged": false,
+      "rowsAfter": 160
+    },
+    {
+      "step": 4,
+      "id": "6548f2c8-6351-44dc-bcc9-71eaa10a6869",
+      "timestamp": "2026-11-17T15:26:55.886Z",
+      "title": "格式错误转为空值",
+      "description": "温度_℃，清空无法按当前类型解析的值",
+      "parameters": {
+        "kind": "invalid_to_missing",
+        "columnId": 4
+      },
+      "changedCells": [
+        {
+          "rowId": 116,
+          "columnId": 4,
+          "column": "温度_℃",
+          "before": "25℃",
+          "after": ""
+        }
+      ],
+      "removedSourceRecordIds": [],
+      "schemaChanged": false,
+      "rowsAfter": 160
+    },
+    {
+      "step": 5,
+      "id": "dabce03e-6de6-4747-901f-13d86373e265",
+      "timestamp": "2026-11-17T15:26:56.923Z",
+      "title": "删除包含缺失值的记录",
+      "description": "全部字段，整条记录将从当前结果中移除",
+      "parameters": {
+        "kind": "drop_missing",
+        "columnId": null
+      },
+      "changedCells": [],
+      "removedSourceRecordIds": [
+        14,
+        33,
+        49,
+        89,
+        93,
+        116,
+        125
+      ],
+      "schemaChanged": false,
+      "rowsAfter": 153
+    },
+    {
+      "step": 6,
+      "id": "e171e0db-9159-4ee6-86b9-e7c927025092",
+      "timestamp": "2026-11-17T15:26:58.038Z",
+      "title": "移除已确认的疑似异常记录",
+      "description": "传感器输出_mV，按当前数据的 1.5 × IQR 阈值检查，整条记录移除",
+      "parameters": {
+        "kind": "drop_outliers",
+        "columnId": 3
+      },
+      "changedCells": [],
+      "removedSourceRecordIds": [
+        20,
+        107
+      ],
+      "schemaChanged": false,
+      "rowsAfter": 151
+    },
+    {
+      "step": 7,
+      "id": "d4b97976-0794-4ece-bbaf-5094fcb27091",
+      "timestamp": "2026-11-17T15:26:59.152Z",
+      "title": "移除已确认的疑似异常记录",
+      "description": "温度_℃，按当前数据的 1.5 × IQR 阈值检查，整条记录移除",
+      "parameters": {
+        "kind": "drop_outliers",
+        "columnId": 4
+      },
+      "changedCells": [],
+      "removedSourceRecordIds": [
+        141
+      ],
+      "schemaChanged": false,
+      "rowsAfter": 150
+    }
+  ],
+  "lineage": [
+    {
+      "cell": "10:5",
+      "origin": "formatted",
+      "step": 1,
+      "title": "清除首尾空白",
+      "before": " A 组 ",
+      "after": "A 组"
+    },
+    {
+      "cell": "61:5",
+      "origin": "formatted",
+      "step": 1,
+      "title": "清除首尾空白",
+      "before": "A 组  ",
+      "after": "A 组"
+    },
+    {
+      "cell": "33:3",
+      "origin": "cleared",
+      "step": 3,
+      "title": "格式错误转为空值",
+      "before": "ERR",
+      "after": ""
+    },
+    {
+      "cell": "89:3",
+      "origin": "cleared",
+      "step": 3,
+      "title": "格式错误转为空值",
+      "before": "等待校准",
+      "after": ""
+    },
+    {
+      "cell": "116:4",
+      "origin": "cleared",
+      "step": 4,
+      "title": "格式错误转为空值",
+      "before": "25℃",
+      "after": ""
+    }
+  ],
+  "replay": null,
+  "methods": {
+    "outliers": "Tukey fences: [Q1 - 1.5 * IQR, Q3 + 1.5 * IQR], sample count >= 4 and IQR > 0",
+    "quantiles": "Linear interpolation at (n - 1) * p",
+    "standardDeviation": "Sample standard deviation (n - 1)",
+    "regression": "Unweighted ordinary least squares on included X/Y pairs; no defined R² for constant Y",
+    "quality": "100 * (1 - unique affected cells / all cells), rounded; extra duplicate rows affect every cell; zero cells yields null",
+    "rowIdentifiers": "One-based source record positions including the header; CSV blank-only records are omitted by the parser; Excel positions are worksheet row numbers",
+    "originalComparison": "Original values interpreted using the currently confirmed column types"
+  }
+}

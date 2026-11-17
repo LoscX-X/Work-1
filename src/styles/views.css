@@ -798,6 +798,10 @@
   font-weight: 550;
 }
 
+.preview-value {
+  white-space: pre-wrap;
+}
+
 .comparison-box .value small {
   font-size: 12px;
   color: #a3b096;

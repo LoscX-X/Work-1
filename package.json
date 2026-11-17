@@ -1,16 +1,18 @@
 {
   "name": "lab-data-workbench",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "description": "LabLens 实验数据体检与可视化工作台",
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 4173 --strictPort",
-    "start": "node server.mjs",
+    "start": "node --env-file-if-exists=.env server.mjs",
     "build": "tsc --noEmit && vite build",
     "typecheck": "tsc --noEmit",
     "test": "node --experimental-strip-types --test tests/*.test.ts",
-    "check": "npm run typecheck && npm test && npm run build"
+    "check": "npm run typecheck && npm test && npm run build",
+    "format": "prettier --write src tests index.html",
+    "format:check": "prettier --check src tests index.html"
   },
   "engines": {
     "node": ">=22.18"
