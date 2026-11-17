@@ -33,7 +33,7 @@ for index, column, value in [(31, 3, "ERR"), (87, 3, "等待校准"), (114, 4, "
 for index, column, value in [(18, 3, "580.000"), (105, 3, "-120.000"), (139, 4, "72.00")]:
     rows[index][column] = value
 rows[8][5] = " A 组 "
-rows[59][5] = "B 组  "
+rows[59][5] = "A 组  "
 for duplicate in [5, 76, 150]:
     rows.append(rows[duplicate].copy())
 
@@ -65,6 +65,16 @@ try:
     ]:
         second.append(record)
     book.save(DESTINATION / "sensor-calibration.xlsx")
+    formatting = Workbook()
+    formatted = formatting.active
+    formatted.title = "格式编号"
+    formatted.append(["样本编号", "读数", "备注"])
+    for row in [[1, 1.234567, '含逗号,引号"与换行\n第二行'], [2, 2.5, "普通值"], [3, 3.75, "普通值"]]:
+        formatted.append(row)
+    for row in range(2, 5):
+        formatted.cell(row, 1).number_format = "000"
+        formatted.cell(row, 2).number_format = "0.00"
+    formatting.save(DESTINATION / "formatting-cases.xlsx")
 except ImportError:
     pass
 

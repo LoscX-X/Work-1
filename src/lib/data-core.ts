@@ -106,17 +106,23 @@ export function toDate(value: unknown): number | null {
   const hh = Number(hour),
     mm = Number(minute),
     ss = Number(second);
-  if (m < 1 || m > 12 || d < 1 || d > new Date(Date.UTC(y, m, 0)).getUTCDate()) return null;
+  const monthEnd = new Date(0);
+  monthEnd.setUTCFullYear(y, m, 0);
+  if (m < 1 || m > 12 || d < 1 || d > monthEnd.getUTCDate()) return null;
   if (hh > 23 || mm > 59 || ss > 59) return null;
   const normalized = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}T${hour.padStart(2, '0')}:${minute.padStart(2, '0')}:${second.padStart(2, '0')}${match[7] ? `.${match[7]}` : ''}${match[8] || 'Z'}`;
   const timestamp = Date.parse(normalized);
   return Number.isFinite(timestamp) ? timestamp : null;
 }
 
+export function isIdentifierName(name: string): boolean {
+  return /(?:^|[_\s-])id(?:$|[_\s-])|编号|序号|学号|邮编|电话|编码/i.test(name);
+}
+
 function inferType(name: string, values: string[]): ColumnType {
   const nonempty = values.filter((value) => !isMissing(value));
   if (!nonempty.length) return 'text';
-  if (/(?:^|[_\s-])id(?:$|[_\s-])|编号|序号|学号|邮编|电话|编码/i.test(name)) return 'text';
+  if (isIdentifierName(name)) return 'text';
   if (nonempty.some((value) => /^[+-]?0\d+\s*$/.test(String(value)))) return 'text';
   if (nonempty.filter((value) => toNumber(value) !== null).length / nonempty.length >= 0.8)
     return 'number';
@@ -131,12 +137,14 @@ export function createDataset(
   metadata: DatasetMetadata = {},
 ): Dataset {
   if (!headers.length) throw new Error('文件中没有可用表头。');
-  const used = new Map<string, number>();
+  const used = new Set<string>();
   const names = headers.map((header, index) => {
     const name = String(header ?? '').trim() || `未命名列_${index + 1}`;
-    const count = (used.get(name) || 0) + 1;
-    used.set(name, count);
-    return count === 1 ? name : `${name}_${count}`;
+    let candidate = name;
+    let suffix = 2;
+    while (used.has(candidate)) candidate = `${name}_${suffix++}`;
+    used.add(candidate);
+    return candidate;
   });
   const rows = matrix.map((values, index) => {
     if (
@@ -174,8 +182,8 @@ export function quantile(sortedValues: readonly number[], fraction: number): num
   const lower = Math.floor(position);
   const weight = position - lower;
   return (
-    sortedValues[lower] +
-    (sortedValues[Math.min(lower + 1, sortedValues.length - 1)] - sortedValues[lower]) * weight
+    sortedValues[lower] * (1 - weight) +
+    sortedValues[Math.min(lower + 1, sortedValues.length - 1)] * weight
   );
 }
 
@@ -195,11 +203,15 @@ export function numericSummary(values: readonly unknown[]): NumericSummary {
       q3: null,
       sd: null,
     };
-  const mean = numbers.reduce((sum, value) => sum + value, 0) / numbers.length;
-  const variance =
+  const scale = Math.max(Math.abs(numbers[0]), Math.abs(numbers[numbers.length - 1])) || 1;
+  const normalizedMean = numbers.reduce((sum, value) => sum + value / scale, 0) / numbers.length;
+  const mean = normalizedMean * scale;
+  const normalizedVariance =
     numbers.length > 1
-      ? numbers.reduce((sum, value) => sum + (value - mean) ** 2, 0) / (numbers.length - 1)
+      ? numbers.reduce((sum, value) => sum + (value / scale - normalizedMean) ** 2, 0) /
+        (numbers.length - 1)
       : null;
+  const sd = normalizedVariance === null ? null : Math.sqrt(normalizedVariance) * scale;
   return {
     count: numbers.length,
     min: numbers[0],
@@ -208,7 +220,7 @@ export function numericSummary(values: readonly unknown[]): NumericSummary {
     median: quantile(numbers, 0.5),
     q1: quantile(numbers, 0.25),
     q3: quantile(numbers, 0.75),
-    sd: variance === null ? null : Math.sqrt(variance),
+    sd: sd !== null && Number.isFinite(sd) ? sd : null,
   };
 }
 
@@ -317,20 +329,24 @@ export function linearRegression(pairs: readonly (readonly number[])[]) {
     (point) => point.length >= 2 && point.slice(0, 2).every(Number.isFinite),
   );
   if (points.length < 2) return null;
-  const meanX = points.reduce((sum, point) => sum + point[0], 0) / points.length;
-  const meanY = points.reduce((sum, point) => sum + point[1], 0) / points.length;
+  const scaleX = points.reduce((maximum, point) => Math.max(maximum, Math.abs(point[0])), 0) || 1;
+  const scaleY = points.reduce((maximum, point) => Math.max(maximum, Math.abs(point[1])), 0) || 1;
+  const meanX = points.reduce((sum, point) => sum + point[0] / scaleX, 0) / points.length;
+  const meanY = points.reduce((sum, point) => sum + point[1] / scaleY, 0) / points.length;
   let xx = 0,
     yy = 0,
     xy = 0;
   for (const [x, y] of points) {
-    xx += (x - meanX) ** 2;
-    yy += (y - meanY) ** 2;
-    xy += (x - meanX) * (y - meanY);
+    xx += (x / scaleX - meanX) ** 2;
+    yy += (y / scaleY - meanY) ** 2;
+    xy += (x / scaleX - meanX) * (y / scaleY - meanY);
   }
   if (xx === 0) return null;
-  const slope = xy / xx;
-  const intercept = meanY - slope * meanX;
-  const correlation = yy === 0 ? null : xy / Math.sqrt(xx * yy);
+  const normalizedSlope = xy / xx;
+  const slope = normalizedSlope === 0 ? 0 : normalizedSlope * (scaleY / scaleX);
+  const intercept = (meanY - normalizedSlope * meanX) * scaleY;
+  if (!Number.isFinite(slope) || !Number.isFinite(intercept)) return null;
+  const correlation = yy === 0 ? null : Math.max(-1, Math.min(1, xy / Math.sqrt(xx * yy)));
   return {
     count: points.length,
     slope,
@@ -343,19 +359,23 @@ export function linearRegression(pairs: readonly (readonly number[])[]) {
 export function histogram(values: readonly unknown[], requestedBins = 12) {
   const numbers = values.map(toNumber).filter((value) => value !== null);
   if (!numbers.length) return { bins: [], count: 0 };
-  const min = Math.min(...numbers),
-    max = Math.max(...numbers);
+  const min = numbers.reduce((minimum, value) => Math.min(minimum, value), Infinity);
+  const max = numbers.reduce((maximum, value) => Math.max(maximum, value), -Infinity);
   if (min === max)
     return { bins: [{ start: min, end: max, count: numbers.length }], count: numbers.length };
   const count = Math.max(1, Math.min(60, Math.round(requestedBins)));
-  const width = (max - min) / count;
+  const scale = Math.max(Math.abs(min), Math.abs(max)) || 1;
+  const normalizedMin = min / scale;
+  const width = (max / scale - normalizedMin) / count;
   const bins = Array.from({ length: count }, (_, index) => ({
-    start: min + index * width,
-    end: min + (index + 1) * width,
+    start: (normalizedMin + index * width) * scale,
+    end: (normalizedMin + (index + 1) * width) * scale,
     count: 0,
   }));
   numbers.forEach((value) => {
-    bins[Math.min(count - 1, Math.floor((value - min) / width))].count += 1;
+    bins[
+      Math.max(0, Math.min(count - 1, Math.floor((value / scale - normalizedMin) / width)))
+    ].count += 1;
   });
   return { bins, count: numbers.length };
 }

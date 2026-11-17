@@ -44,4 +44,5 @@ export interface HistoryState {
   original: Dataset;
   entries: OperationEntry[];
   cursor: number;
+  replay?: { loadedAt: string; configName: string; generatedAt: string };
 }

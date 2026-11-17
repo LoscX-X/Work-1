@@ -1,0 +1,34 @@
+{
+  "scenario": "Actual browser exports after deduplication and median imputation",
+  "source_sha256": "660a7b924e3ad2c5d60ea7fb8ce3c76a60779a1c2beb05569e277554e048c483",
+  "rows": 160,
+  "active_operations": 2,
+  "included_observations": 156,
+  "imputed_cells": [
+    "14:3",
+    "49:3"
+  ],
+  "independently_calculated_fit": {
+    "slope": 1.789556189829693,
+    "intercept": 15.338367748465544,
+    "r2": 0.555055689559629
+  },
+  "report_chart_dimensions": [
+    1800,
+    900
+  ],
+  "downloaded_chart_dimensions": [
+    1646,
+    900
+  ],
+  "verified": [
+    "source file hash",
+    "CSV against complete cell changes",
+    "recipe row count",
+    "independent OLS",
+    "HTML against audit JSON",
+    "embedded PNG",
+    "downloaded PNG"
+  ],
+  "limits": "This script checks the saved two-step scenario. Browser interactions are documented separately; this is not a browser runner."
+}

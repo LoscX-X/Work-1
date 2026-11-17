@@ -1,0 +1,41 @@
+{
+  "format": "lablens.recipe",
+  "version": 1,
+  "algorithmVersion": 1,
+  "generatedAt": "2026-11-17T15:09:06.689Z",
+  "source": {
+    "sha256": "660a7b924e3ad2c5d60ea7fb8ce3c76a60779a1c2beb05569e277554e048c483",
+    "filename": "传感器标定实验.csv",
+    "sheet": null,
+    "rowCount": 163,
+    "columns": [
+      "样本编号",
+      "时间_s",
+      "参考压力_kPa",
+      "传感器输出_mV",
+      "温度_℃",
+      "实验组"
+    ]
+  },
+  "operations": [
+    {
+      "timestamp": "2026-11-17T15:06:14.420Z",
+      "parameters": {
+        "kind": "remove_duplicates"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T15:06:21.957Z",
+      "parameters": {
+        "kind": "fill_missing",
+        "columnId": 3,
+        "method": "median",
+        "value": ""
+      }
+    }
+  ],
+  "expected": {
+    "rows": 160,
+    "fingerprint": "aa84050c33e8a9ff82b04591efea64a664c7b2498ffb7f60110973150dd28b1d"
+  }
+}

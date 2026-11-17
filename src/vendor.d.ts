@@ -10,6 +10,7 @@ interface ExcelCellValue {
 interface ExcelCell {
   address: string;
   value: string | number | boolean | Date | ExcelCellValue | null;
+  numFmt?: string;
 }
 
 interface ExcelRow {
@@ -34,7 +35,10 @@ interface ExcelWorkbook {
 declare const ExcelJS: { Workbook: new () => ExcelWorkbook };
 
 declare const Papa: {
-  parse(text: string, options: { delimiter: string; skipEmptyLines: string; dynamicTyping: boolean }): {
+  parse(
+    text: string,
+    options: { delimiter: string; skipEmptyLines: string; dynamicTyping: boolean },
+  ): {
     data: string[][];
     errors: { code: string; message: string; row?: number }[];
     meta: { delimiter: string };

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { auditDataset } from '../lib/data-core';
 import type { Dataset } from '../lib/data-core';
 import { applyOperation } from '../features/cleaning/apply-operation';
@@ -9,14 +9,28 @@ import {
   moveHistory,
 } from '../features/cleaning/history';
 import type { HistoryState, Operation, OperationResult } from '../features/cleaning/types';
+import { deriveLineage } from '../features/cleaning/lineage';
+import type { CellProvenance } from '../features/cleaning/lineage';
 
 export function useCleaningHistory(notify: (text: string, error?: boolean) => void) {
   const [history, setHistory] = useState<HistoryState | null>(null);
   const [preview, setPreview] = useState<{ base: Dataset; result: OperationResult } | null>(null);
+  const revision = useRef(0);
   const dataset = history ? currentDataset(history) : null;
   const original = history?.original ?? null;
   const audit = useMemo(() => (dataset ? auditDataset(dataset) : null), [dataset]);
-  const originalAudit = useMemo(() => (original ? auditDataset(original) : null), [original]);
+  const originalView = useMemo(
+    () => (original && dataset ? { ...original, columns: dataset.columns } : null),
+    [original, dataset?.columns],
+  );
+  const originalAudit = useMemo(
+    () => (originalView ? auditDataset(originalView) : null),
+    [originalView],
+  );
+  const lineage = useMemo(
+    () => (history ? deriveLineage(history) : new Map<string, CellProvenance>()),
+    [history],
+  );
   const previewAudit = useMemo(
     () => (preview ? auditDataset(preview.result.dataset) : null),
     [preview],
@@ -25,6 +39,7 @@ export function useCleaningHistory(notify: (text: string, error?: boolean) => vo
   const acceptDataset = useCallback(
     (next: Dataset, sample: boolean) => {
       const original = { ...next, metadata: { ...next.metadata, sample } };
+      revision.current += 1;
       setPreview(null);
       setHistory(createHistory(original));
       notify(`已读取 ${next.rows.length} 条记录、${next.columns.length} 个字段`);
@@ -50,6 +65,7 @@ export function useCleaningHistory(notify: (text: string, error?: boolean) => vo
       return;
     }
     const next = commitOperation(history, preview.result.operation);
+    if (next !== history) revision.current += 1;
     setHistory(next);
     setPreview(null);
     notify(next === history ? '本次操作没有修改数据。' : `已执行：${preview.result.title}`);
@@ -57,17 +73,28 @@ export function useCleaningHistory(notify: (text: string, error?: boolean) => vo
 
   function goTo(cursor: number) {
     if (!history) return;
+    revision.current += 1;
     setHistory(moveHistory(history, cursor));
     setPreview(null);
     notify(cursor === 0 ? '已回到原始数据，可重做后续步骤。' : `已回到第 ${cursor} 步`);
+  }
+
+  function applyReplayedHistory(next: HistoryState, expectedRevision: number): boolean {
+    if (revision.current !== expectedRevision) return false;
+    revision.current += 1;
+    setHistory(next);
+    setPreview(null);
+    return true;
   }
 
   return {
     history,
     dataset,
     original,
+    originalView,
     audit,
     originalAudit,
+    lineage,
     preview,
     previewAudit,
     acceptDataset,
@@ -75,6 +102,8 @@ export function useCleaningHistory(notify: (text: string, error?: boolean) => vo
     confirmPreview,
     closePreview: () => setPreview(null),
     goTo,
-    replaceHistory: setHistory,
+    revision: revision.current,
+    isCurrentRevision: (expected: number) => revision.current === expected,
+    applyReplayedHistory,
   };
 }

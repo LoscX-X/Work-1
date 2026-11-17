@@ -12,9 +12,13 @@ import { OperationForm } from './components/OperationForm';
 import type { OperationFormKind } from './components/OperationForm';
 import { OperationPreview } from './components/OperationPreview';
 import { CellEditDialog } from './components/CellEditDialog';
-import { csvText } from './lib/data-core';
 import type { IssueKind } from './lib/data-core';
-import { downloadBlob, filenameStem } from './lib/format';
+import { ChartsView } from './views/ChartsView';
+import { useChartSettings } from './hooks/useChartSettings';
+import type { DataVersion } from './components/DataVersionTabs';
+import { HistoryView } from './views/HistoryView';
+import { useReportExport } from './hooks/useReportExport';
+import { RecipePreview } from './components/RecipePreview';
 
 const titles: Record<ViewId, string> = {
   overview: '数据概览',
@@ -34,9 +38,18 @@ export function App() {
   const [operationKind, setOperationKind] = useState<OperationFormKind | null>(null);
   const [editCell, setEditCell] = useState<{ rowId: number; columnId: number } | null>(null);
   const input = useRef<HTMLInputElement>(null);
+  const recipeInput = useRef<HTMLInputElement>(null);
   const { dataset, audit } = workbench;
+  const [dataVersion, setDataVersion] = useState<DataVersion>('current');
+  const chartSettings = useChartSettings(workbench.original, dataset);
+  const reports = useReportExport(workbench.history, chartSettings.settings, workbench.notify);
+  const tableDataset =
+    dataVersion === 'original' && workbench.originalView ? workbench.originalView : dataset;
+  const tableAudit =
+    dataVersion === 'original' && workbench.originalAudit ? workbench.originalAudit : audit;
 
-  function inspect(kind: IssueKind | 'all', rowId?: number) {
+  function inspect(kind: IssueKind | 'all', rowId?: number, version: DataVersion = 'current') {
+    setDataVersion(version);
     setFilter(kind);
     setSelectedRowId(rowId ?? null);
     setView('data');
@@ -44,6 +57,7 @@ export function App() {
 
   async function importFile(file: File) {
     setColumnId(null);
+    setDataVersion('current');
     setOperationKind(null);
     setEditCell(null);
     setSelectedRowId(null);
@@ -82,11 +96,22 @@ export function App() {
           event.target.value = '';
         }}
       />
+      <input
+        ref={recipeInput}
+        type="file"
+        accept=".json"
+        hidden
+        onChange={(event) => {
+          const file = event.target.files?.[0];
+          if (file) void workbench.importRecipe(file);
+          event.target.value = '';
+        }}
+      />
       <Sidebar
         view={view}
         onNavigate={setView}
         issues={audit?.issues.length || 0}
-        available={['overview', 'data', 'clean']}
+        available={['overview', 'data', 'clean', 'charts', 'history']}
       />
       <div className="workspace">
         <header className="topbar">
@@ -115,14 +140,7 @@ export function App() {
               kind="primary"
               icon="download"
               disabled={!dataset}
-              onClick={() => {
-                if (dataset)
-                  downloadBlob(
-                    csvText(dataset),
-                    `${filenameStem(filename)}-当前数据.csv`,
-                    'text/csv;charset=utf-8',
-                  );
-              }}
+              onClick={() => setView('history')}
             >
               导出数据
             </Button>
@@ -169,18 +187,28 @@ export function App() {
                   cleaningAvailable
                 />
               )}
-              {view === 'data' && (
+              {view === 'data' && tableDataset && tableAudit && (
                 <DataView
-                  dataset={dataset}
-                  audit={audit}
+                  dataset={tableDataset}
+                  audit={tableAudit}
                   filter={filter}
                   selectedRowId={selectedRowId}
                   onFilter={(kind) => {
                     setFilter(kind);
                     setSelectedRowId(null);
                   }}
-                  onColumnType={setColumnId}
-                  onEditCell={(rowId, columnId) => setEditCell({ rowId, columnId })}
+                  onColumnType={dataVersion === 'current' ? setColumnId : undefined}
+                  onEditCell={
+                    dataVersion === 'current'
+                      ? (rowId, columnId) => setEditCell({ rowId, columnId })
+                      : undefined
+                  }
+                  version={dataVersion}
+                  onVersion={(value) => {
+                    setDataVersion(value);
+                    setSelectedRowId(null);
+                  }}
+                  lineage={dataVersion === 'current' ? workbench.lineage : undefined}
                 />
               )}
               {view === 'clean' &&
@@ -197,6 +225,37 @@ export function App() {
                     onGoTo={workbench.goTo}
                   />
                 )}
+              {view === 'charts' && workbench.originalView && workbench.history && (
+                <ChartsView
+                  dataset={dataset}
+                  originalView={workbench.originalView}
+                  history={workbench.history}
+                  settings={chartSettings.settings}
+                  onSettings={chartSettings.updateSettings}
+                  version={dataVersion}
+                  onVersion={setDataVersion}
+                  onInspect={(id, version) => inspect('all', id, version)}
+                  onNotify={workbench.notify}
+                />
+              )}
+              {view === 'history' && workbench.history && (
+                <HistoryView
+                  history={workbench.history}
+                  exporting={reports.exporting}
+                  recipeBusy={workbench.recipeBusy}
+                  onGoTo={workbench.goTo}
+                  onCsv={reports.exportCsv}
+                  onHtml={() => {
+                    void reports.exportHtml();
+                  }}
+                  onAudit={reports.exportAudit}
+                  onRecipe={() => {
+                    void workbench.exportRecipe();
+                  }}
+                  onImportRecipe={() => recipeInput.current?.click()}
+                  onNotify={workbench.notify}
+                />
+              )}
             </>
           ) : (
             <EmptyState
@@ -274,6 +333,15 @@ export function App() {
         <div className={`toast ${workbench.message.error ? 'error' : ''}`} role="status">
           {workbench.message.text}
         </div>
+      )}
+      {workbench.pendingRecipe && (
+        <RecipePreview
+          recipe={workbench.pendingRecipe.recipe}
+          filename={workbench.pendingRecipe.filename}
+          disabled={workbench.busy}
+          onConfirm={workbench.confirmRecipe}
+          onClose={workbench.closeRecipe}
+        />
       )}
       {dragging && <div className="drop-overlay">松开以导入实验数据</div>}
     </div>
