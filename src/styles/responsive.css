@@ -1,256 +1,264 @@
-@media(min-width:1550px) {
+@media (min-width: 1550px) {
   .main-content {
-    padding-top:35px;
+    padding-top: 35px;
   }
   .preview-chart {
-    height:285px;
+    height: 285px;
   }
   .stat-card {
-    min-height:140px;
+    min-height: 140px;
   }
   .issue-card {
-    padding:18px 16px;
+    padding: 18px 16px;
   }
   .chart-main {
-    height:520px;
+    height: 520px;
   }
 }
 
-@media(max-width:1100px) {
+@media (max-width: 1100px) {
   :root {
-    --sidebar:188px;
+    --sidebar: 188px;
   }
   .sidebar {
-    padding-left:11px;
-    padding-right:11px;
+    padding-left: 11px;
+    padding-right: 11px;
   }
   .brand {
-    padding:0 7px;
+    padding: 0 7px;
   }
   .topbar {
-    padding:0 23px;
+    padding: 0 23px;
   }
   .main-content {
-    padding:25px 23px;
+    padding: 25px 23px;
   }
-  .audit-grid,.overview-bottom {
-    grid-template-columns:minmax(0,1.2fr) minmax(270px,1fr);
+  .audit-grid,
+  .overview-bottom {
+    grid-template-columns: minmax(0, 1.2fr) minmax(270px, 1fr);
   }
   .stat-card {
-    padding:16px;
+    padding: 16px;
   }
   .stat-card.quality {
-    gap:10px;
+    gap: 10px;
   }
   .quality-ring {
-    width:52px;
-    height:52px;
+    width: 52px;
+    height: 52px;
   }
   .ring-inner {
-    font-size:20px;
+    font-size: 20px;
   }
   .stat-card.quality .stat-value {
-    font-size:17px;
+    font-size: 17px;
   }
   .clean-layout {
-    grid-template-columns:260px minmax(0,1fr);
+    grid-template-columns: 260px minmax(0, 1fr);
   }
   .chart-layout {
-    grid-template-columns:minmax(0,1fr) 235px;
+    grid-template-columns: minmax(0, 1fr) 235px;
   }
   .detail-grid {
-    grid-template-columns:minmax(0,1fr) 260px;
+    grid-template-columns: minmax(0, 1fr) 260px;
   }
   .column-row {
-    grid-template-columns:minmax(0,1fr) 65px 38px;
-    gap:8px;
+    grid-template-columns: minmax(0, 1fr) 65px 38px;
+    gap: 8px;
   }
   .segments button {
-    padding:5px 7px;
+    padding: 5px 7px;
   }
   .file-name {
-    max-width:270px;
+    max-width: 270px;
   }
 }
 
-@media(max-width:850px) {
+@media (max-width: 850px) {
   :root {
-    --sidebar:70px;
+    --sidebar: 70px;
   }
   .sidebar {
-    padding:25px 8px 15px;
+    padding: 25px 8px 15px;
   }
   .brand {
-    padding:0 12px;
-    margin-bottom:30px;
+    padding: 0 12px;
+    margin-bottom: 30px;
   }
-  .brand strong,.nav-button .nav-label,.nav-button .count,.sidebar-label,.sidebar-bottom {
-    display:none;
+  .brand strong,
+  .nav-button .nav-label,
+  .nav-button .count,
+  .sidebar-label,
+  .sidebar-bottom {
+    display: none;
   }
   .nav-button {
-    justify-content:center;
-    padding:13px 0;
-    margin:6px 0;
+    justify-content: center;
+    padding: 13px 0;
+    margin: 6px 0;
   }
   .summary-grid {
-    gap:10px;
+    gap: 10px;
   }
   .stat-card {
-    padding:14px;
-    min-height:118px;
+    padding: 14px;
+    min-height: 118px;
   }
   .stat-value {
-    font-size:28px;
+    font-size: 28px;
   }
   .stat-card.quality .quality-ring {
-    display:none;
+    display: none;
   }
-  .audit-grid,.overview-bottom {
-    grid-template-columns:1fr;
+  .audit-grid,
+  .overview-bottom {
+    grid-template-columns: 1fr;
   }
   .issue-grid {
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
   .issue-card {
-    padding:12px;
+    padding: 12px;
   }
-  .clean-layout,.chart-layout,.detail-grid {
-    grid-template-columns:1fr;
+  .clean-layout,
+  .chart-layout,
+  .detail-grid {
+    grid-template-columns: 1fr;
   }
   .chart-controls {
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:0 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 20px;
   }
   .chart-type-buttons {
-    grid-column:1/-1;
+    grid-column: 1/-1;
   }
   .page-heading {
-    align-items:flex-start;
+    align-items: flex-start;
   }
   .file-name {
-    max-width:250px;
+    max-width: 250px;
   }
   .topbar-actions .button {
-    padding:7px 9px;
+    padding: 7px 9px;
   }
   .topbar-actions .button .icon {
-    display:none;
+    display: none;
   }
 }
 
-@media(max-width:600px) {
+@media (max-width: 600px) {
   .main-content {
-    padding:23px 15px;
+    padding: 23px 15px;
   }
   .topbar {
-    padding:0 15px;
-    height:63px;
+    padding: 0 15px;
+    height: 63px;
   }
   .breadcrumb strong {
-    max-width:100px;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .topbar-actions {
-    gap:4px;
+    gap: 4px;
   }
   .topbar-actions .button {
-    font-size:10px;
-    padding:6px 8px;
+    font-size: 10px;
+    padding: 6px 8px;
   }
   .summary-grid {
-    grid-template-columns:1fr 1fr;
+    grid-template-columns: 1fr 1fr;
   }
   .summary-grid .stat-card {
-    min-height:105px;
+    min-height: 105px;
   }
   .stat-value {
-    font-size:27px;
-    margin-top:8px;
+    font-size: 27px;
+    margin-top: 8px;
   }
   .page-heading {
-    flex-wrap:wrap;
-    gap:12px;
+    flex-wrap: wrap;
+    gap: 12px;
   }
   h1 {
-    font-size:23px;
+    font-size: 23px;
   }
   .page-heading p {
-    font-size:10px;
+    font-size: 10px;
   }
   .heading-actions {
-    width:100%;
-    justify-content:flex-end;
+    width: 100%;
+    justify-content: flex-end;
   }
   .issue-grid {
-    grid-template-columns:1fr 1fr;
+    grid-template-columns: 1fr 1fr;
   }
   .action-strip {
-    padding:15px;
-    flex-wrap:wrap;
+    padding: 15px;
+    flex-wrap: wrap;
   }
-  .action-strip>.icon {
-    display:none;
+  .action-strip > .icon {
+    display: none;
   }
   .action-strip .button {
-    margin-left:0;
+    margin-left: 0;
   }
   .search {
-    margin-left:0;
-    width:100%;
+    margin-left: 0;
+    width: 100%;
   }
   .search input {
-    width:100%;
+    width: 100%;
   }
   .table-toolbar {
-    padding:12px;
+    padding: 12px;
   }
   .segments {
-    width:100%;
-    overflow:auto;
-    justify-content:space-between;
+    width: 100%;
+    overflow: auto;
+    justify-content: space-between;
   }
   .segments button {
-    font-size:10px;
-    padding:5px 6px;
+    font-size: 10px;
+    padding: 5px 6px;
   }
   .chart-controls {
-    display:block;
+    display: block;
   }
   .fit-stat {
-    padding:13px 12px;
+    padding: 13px 12px;
   }
   .fit-stat .value {
-    font-size:14px;
+    font-size: 14px;
   }
   .comparison-grid {
-    gap:9px;
+    gap: 9px;
   }
   .comparison-box {
-    padding:14px;
+    padding: 14px;
   }
   .panel-heading {
-    padding:16px;
+    padding: 16px;
   }
   .column-list {
-    padding:0 16px 10px;
+    padding: 0 16px 10px;
   }
   .recent-issue {
-    padding:13px 16px;
+    padding: 13px 16px;
   }
   .topbar .breadcrumb .icon {
-    display:none;
+    display: none;
   }
   .topbar .breadcrumb {
-    gap:5px;
-    font-size:10px;
+    gap: 5px;
+    font-size: 10px;
   }
   .empty-state {
-    padding:45px 12px;
+    padding: 45px 12px;
   }
   .toast {
-    left:calc(50% + 30px);
+    left: calc(50% + 30px);
   }
 }
