@@ -4,6 +4,9 @@ import { numberText } from '../../lib/format.ts';
 import { collectPoints } from './collect-points.ts';
 import type { ChartAnalysis, ChartPoint, ChartSettings } from './types.ts';
 
+const axisNameStyle = { fontSize: 12, color: '#405267' };
+const axisLabelStyle = { fontSize: 11, color: '#536578' };
+
 export function defaultChartSettings(dataset: Dataset): ChartSettings {
   const numeric = dataset.columns.filter((column) => column.type === 'number');
   const x = numeric.find((column) => /参考压力/.test(column.name)) || numeric[0];
@@ -37,7 +40,7 @@ export function buildChart(
       ? linearRegression(points.map((point) => [Number(point.value[0]), point.value[1]]))
       : null;
   const option: Record<string, unknown> = {
-    color: ['#92ad79', '#7f9ec9', '#c7a077', '#ad96c4', '#78aaa2', '#c58c91'],
+    color: ['#326b92', '#b75c32', '#46816e', '#8060a0', '#9b7629', '#a74e69'],
     animationDuration: 300,
     tooltip: {
       trigger: settings.kind === 'histogram' ? 'axis' : 'item',
@@ -50,9 +53,9 @@ export function buildChart(
       top: 9,
       left: 24,
       right: 24,
-      textStyle: { fontSize: 10, color: '#7d8d9b' },
-      itemWidth: 10,
-      itemHeight: 7,
+      textStyle: { fontSize: 12, color: '#405267' },
+      itemWidth: 12,
+      itemHeight: 8,
     },
     toolbox: { show: false },
   };
@@ -65,18 +68,19 @@ export function buildChart(
       type: 'category',
       name: yName,
       nameLocation: 'middle',
-      nameGap: 41,
+      nameGap: 44,
+      nameTextStyle: axisNameStyle,
       data: result.bins.map((bin) => `${numberText(bin.start, 2)}–${numberText(bin.end, 2)}`),
-      axisLabel: { fontSize: 9, rotate: 22, color: '#99a7b5' },
-      axisLine: { lineStyle: { color: '#e0e6eb' } },
+      axisLabel: { ...axisLabelStyle, rotate: 22 },
+      axisLine: { lineStyle: { color: '#bcc9d5' } },
     };
     option.yAxis = {
       type: 'value',
       name: '记录数',
       minInterval: 1,
-      nameTextStyle: { fontSize: 10, color: '#8c9ba8' },
-      axisLabel: { fontSize: 10, color: '#99a7b5' },
-      splitLine: { lineStyle: { color: '#edf0f3', type: 'dashed' } },
+      nameTextStyle: axisNameStyle,
+      axisLabel: axisLabelStyle,
+      splitLine: { lineStyle: { color: '#dfe6ee', type: 'dashed' } },
     };
     option.series = [
       {
@@ -84,7 +88,7 @@ export function buildChart(
         type: 'bar',
         data: result.bins.map((bin) => bin.count),
         barMaxWidth: 42,
-        itemStyle: { color: '#9bb887', borderRadius: [4, 4, 0, 0] },
+        itemStyle: { color: '#457896', borderRadius: [2, 2, 0, 0] },
       },
     ];
   } else {
@@ -100,9 +104,9 @@ export function buildChart(
       name: xName,
       nameLocation: 'middle',
       nameGap: 35,
-      nameTextStyle: { fontSize: 11, color: '#8b9ba9' },
-      axisLabel: { fontSize: 10, color: '#99a7b5' },
-      axisLine: { lineStyle: { color: '#e0e6eb' } },
+      nameTextStyle: axisNameStyle,
+      axisLabel: axisLabelStyle,
+      axisLine: { lineStyle: { color: '#bcc9d5' } },
       splitLine: { show: false },
       ...(category ? { data: Array.from(new Set(points.map((point) => point.value[0]))) } : {}),
     };
@@ -110,9 +114,9 @@ export function buildChart(
       type: 'value',
       scale: true,
       name: yName,
-      nameTextStyle: { fontSize: 10, color: '#8b9ba9' },
-      axisLabel: { fontSize: 10, color: '#99a7b5' },
-      splitLine: { lineStyle: { color: '#edf0f3', type: 'dashed' } },
+      nameTextStyle: axisNameStyle,
+      axisLabel: axisLabelStyle,
+      splitLine: { lineStyle: { color: '#dfe6ee', type: 'dashed' } },
     };
     const series: Record<string, unknown>[] = Array.from(groups, ([name, values]) => ({
       name,
@@ -139,7 +143,7 @@ export function buildChart(
           [max, regression.slope * max + regression.intercept],
         ],
         symbol: 'none',
-        lineStyle: { color: '#6f8192', type: 'dashed', width: 1.5 },
+        lineStyle: { color: '#334557', type: 'dashed', width: 1.5 },
         silent: true,
       });
     }

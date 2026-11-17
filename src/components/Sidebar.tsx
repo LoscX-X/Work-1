@@ -1,3 +1,4 @@
+import { version } from '../../package.json';
 import { Icon } from './Icon';
 
 export type ViewId = 'overview' | 'data' | 'clean' | 'charts' | 'history';
@@ -55,12 +56,11 @@ export function Sidebar({
             <Icon name="shield" /> 浏览器本地处理
           </strong>
           <br />
-          文件读取、检查与图表计算
-          <br />
-          均在当前设备中完成。
+          文件和计算留在当前设备。
         </div>
         <div className="sidebar-footer">
-          <Icon name="flask" /> 实验数据工作台<span className="version">v1.0</span>
+          <span>实验数据工作台</span>
+          <span className="version">v{version}</span>
         </div>
       </div>
     </aside>

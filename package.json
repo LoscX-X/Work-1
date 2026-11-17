@@ -1,6 +1,6 @@
 {
   "name": "lab-data-workbench",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "type": "module",
   "description": "LabLens 实验数据体检与可视化工作台",

@@ -38,7 +38,7 @@ export function Overview({
                 value: [px, py],
                 rowId: row.id,
                 itemStyle: {
-                  color: audit.rowFlags.get(row.id)?.has('outlier') ? '#d4a37a' : '#93b181',
+                  color: audit.rowFlags.get(row.id)?.has('outlier') ? '#b75c32' : '#457896',
                 },
               },
             ];
@@ -46,30 +46,29 @@ export function Overview({
         : [];
     return {
       animationDuration: 350,
-      grid: { top: 18, bottom: 38, left: 52, right: 24 },
+      grid: { top: 24, bottom: 46, left: 56, right: 24 },
       tooltip: { trigger: 'item', renderMode: 'richText' },
       xAxis: {
         type: 'value',
         name: x?.name ?? 'X',
         nameLocation: 'middle',
-        nameGap: 26,
-        nameTextStyle: { fontSize: 10, color: '#98a6b5' },
-        axisLine: { lineStyle: { color: '#e6ebf0' } },
-        axisLabel: { fontSize: 9, color: '#a3afbc' },
+        nameGap: 29,
+        nameTextStyle: { fontSize: 12, color: '#405267' },
+        axisLine: { lineStyle: { color: '#bcc9d5' } },
+        axisLabel: { fontSize: 11, color: '#536578' },
         splitLine: { show: false },
       },
       yAxis: {
         type: 'value',
         scale: true,
         name: y?.name ?? 'Y',
-        nameTextStyle: { fontSize: 9, color: '#a3afbc' },
-        axisLabel: { fontSize: 9, color: '#a3afbc' },
-        splitLine: { lineStyle: { type: 'dashed', color: '#edf0f3' } },
+        nameTextStyle: { fontSize: 12, color: '#405267' },
+        axisLabel: { fontSize: 11, color: '#536578' },
+        splitLine: { lineStyle: { type: 'dashed', color: '#dfe6ee' } },
       },
-      series: [{ type: 'scatter', symbolSize: 5, data: points, emphasis: { scale: 1.6 } }],
+      series: [{ type: 'scatter', symbolSize: 6, data: points, emphasis: { scale: 1.6 } }],
     };
   }, [dataset, audit, x, y]);
-  const totalIssues = Object.values(audit.counts).reduce((sum, count) => sum + count, 0);
   const kinds = Object.keys(ISSUE_LABELS) as IssueKind[];
   const recent = kinds.flatMap((kind) =>
     audit.issues.filter((issue) => issue.kind === kind).slice(0, 1),
@@ -80,15 +79,23 @@ export function Overview({
       <div className="audit-grid">
         <Panel
           title="测量关系预览"
-          description={x && y ? `${x.name} × ${y.name}` : '确认至少两个数值字段后显示散点图'}
+          description={
+            x && y ? `${x.name} × ${y.name} · 点击数据点定位` : '确认至少两个数值字段后显示散点图'
+          }
           action={
-            <div className="chart-legend">
-              <span>
-                <i className="legend-dot" />
-                有效测量
-              </span>
-              <span>点击数据点定位源记录</span>
-            </div>
+            x &&
+            y && (
+              <div className="chart-legend">
+                <span>
+                  <i className="legend-dot" />
+                  其他记录
+                </span>
+                <span>
+                  <i className="legend-dot flagged" />
+                  疑似异常记录
+                </span>
+              </div>
+            )
           }
         >
           {x && y ? (
@@ -101,19 +108,16 @@ export function Overview({
             <div className="history-empty">当前缺少可绘制的数值字段。</div>
           )}
         </Panel>
-        <Panel
-          title="数据质量检查"
-          description="点击问题类型，查看受影响的源记录"
-          action={<span className="small muted">{totalIssues} 项</span>}
-        >
-          <div className="issue-grid">
+        <Panel title="数据质量检查" description="点击问题类型，查看受影响的源记录">
+          <div className="issue-list">
             {kinds.map((kind) => (
-              <button key={kind} className={`issue-card ${kind}`} onClick={() => onInspect(kind)}>
+              <button key={kind} className={`issue-entry ${kind}`} onClick={() => onInspect(kind)}>
                 <span className="issue-icon">
                   <Icon name={kind} />
                 </span>
-                <strong>{audit.counts[kind]}</strong>
-                <div className="issue-label">{ISSUE_LABELS[kind]}</div>
+                <span className="issue-label">{ISSUE_LABELS[kind]}</span>
+                <strong>{numberText(audit.counts[kind], 0)}</strong>
+                <Icon name="chevron" />
               </button>
             ))}
           </div>
@@ -207,10 +211,10 @@ export function Overview({
       <div className="action-strip">
         <Icon name="clean" />
         <div>
-          <h3>处理之前，先查看数据会发生什么变化</h3>
-          <p>每次清洗均保留参数与源记录，确认后执行，支持撤销和重做。</p>
+          <h3>清洗与处理</h3>
+          <p>先预览变更，确认后执行。保留源记录，可撤销或重做。</p>
         </div>
-        <Button kind="lime" onClick={onClean} disabled={!cleaningAvailable}>
+        <Button kind="secondary" onClick={onClean} disabled={!cleaningAvailable}>
           进入清洗工作流
           <Icon name="arrow" />
         </Button>

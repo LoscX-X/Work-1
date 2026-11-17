@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { Icon } from './Icon';
 
-type ButtonKind = 'primary' | 'secondary' | 'ghost' | 'lime' | 'danger';
+type ButtonKind = 'primary' | 'secondary' | 'ghost' | 'danger';
 type BadgeKind = 'neutral' | 'green' | 'orange' | 'red' | 'blue';
 
 export function Button({

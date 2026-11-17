@@ -5,12 +5,6 @@
   .preview-chart {
     height: 285px;
   }
-  .stat-card {
-    min-height: 140px;
-  }
-  .issue-card {
-    padding: 18px 16px;
-  }
   .chart-main {
     height: 520px;
   }
@@ -40,19 +34,6 @@
   .stat-card {
     padding: 16px;
   }
-  .stat-card.quality {
-    gap: 10px;
-  }
-  .quality-ring {
-    width: 52px;
-    height: 52px;
-  }
-  .ring-inner {
-    font-size: 20px;
-  }
-  .stat-card.quality .stat-value {
-    font-size: 17px;
-  }
   .clean-layout {
     grid-template-columns: 260px minmax(0, 1fr);
   }
@@ -63,7 +44,7 @@
     grid-template-columns: minmax(0, 1fr) 260px;
   }
   .column-row {
-    grid-template-columns: minmax(0, 1fr) 65px 38px;
+    grid-template-columns: minmax(0, 1fr) 65px 46px;
     gap: 8px;
   }
   .segments button {
@@ -97,28 +78,15 @@
     padding: 13px 0;
     margin: 6px 0;
   }
-  .summary-grid {
-    gap: 10px;
-  }
   .stat-card {
     padding: 14px;
-    min-height: 118px;
   }
   .stat-value {
     font-size: 28px;
   }
-  .stat-card.quality .quality-ring {
-    display: none;
-  }
   .audit-grid,
   .overview-bottom {
     grid-template-columns: 1fr;
-  }
-  .issue-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  .issue-card {
-    padding: 12px;
   }
   .clean-layout,
   .chart-layout,
@@ -165,14 +133,11 @@
     gap: 4px;
   }
   .topbar-actions .button {
-    font-size: 10px;
+    font-size: 12px;
     padding: 6px 8px;
   }
   .summary-grid {
     grid-template-columns: 1fr 1fr;
-  }
-  .summary-grid .stat-card {
-    min-height: 105px;
   }
   .stat-value {
     font-size: 27px;
@@ -186,14 +151,11 @@
     font-size: 23px;
   }
   .page-heading p {
-    font-size: 10px;
+    font-size: 12px;
   }
   .heading-actions {
     width: 100%;
     justify-content: flex-end;
-  }
-  .issue-grid {
-    grid-template-columns: 1fr 1fr;
   }
   .action-strip {
     padding: 15px;
@@ -221,7 +183,7 @@
     justify-content: space-between;
   }
   .segments button {
-    font-size: 10px;
+    font-size: 12px;
     padding: 5px 6px;
   }
   .chart-controls {
