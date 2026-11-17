@@ -19,6 +19,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image, PageBreak, Preformatted, Flowable
 
 ROOT = Path(__file__).resolve().parents[1]
+VERSION = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))["version"]
 OUT = ROOT / "output/pdf/LabLens-Technical-Documentation.pdf"
 TMP = ROOT / "tmp/pdfs"
 OUT.parent.mkdir(parents=True, exist_ok=True)
@@ -152,11 +153,11 @@ title("实验数据体检与可视化工作台", "第九届传智杯 · AI 创�
 para("LabLens", "hero")
 para("让每一次处理，都能回到原始记录。", "sub")
 para("从表格导入、问题定位到可撤销清洗、拟合图表与处理报告，构成面向实验教学的浏览器本地工作流。")
-figure("docs/evidence/final-demo/final-chart.png", "图 1 · 正常界面实际导出的最终标定图。两组为合成教学观测，拟合使用整体 150 对数据。", height=256)
+figure("docs/evidence/final-demo/final-chart.png", "图 1 · v1.0.0 界面实际导出的最终标定图。两组为合成教学观测，拟合使用整体 150 对数据。", height=256)
 table(["原始记录", "处理后记录", "当前检查项"], [["163 条", "150 条", "13 → 0 项"]])
-para(f"版本 1.0.0 · {DATE}（北京时间）", "small")
+para(f"版本 {VERSION} · {DATE}（北京时间）", "small")
 para('<link href="https://github.com/LoscX-X/Work-1" color="#718f56">源码与开发历史：github.com/LoscX-X/Work-1</link>', "small")
-para("本文的界面、统计和文件来自实际实现与验证。教学样例的检查通过和高 R² 不构成真实实验效果的证明。", "small")
+para("v1.0.1 调整了概览、表格、预览和图表的显示。文中的截图和图像记录了 v1.0.0 的实际操作与导出。", "small")
 
 title("问题与产品边界", "01 · 场景选择与可验收目标")
 para("本科实验课中，学生常在表格中整理传感器标定或重复测量结果。空值、错误文字、重复记录与极端读数混在一起时，直接绘图很难说明哪些观测被采用、处理过什么，以及能否重新得到同一结果。")
@@ -281,7 +282,7 @@ sub("对实际导出文件独立检查")
 para("标准库 Python 从原文件按逐格变更与移除记录重建结果，逐项比较 CSV；重新计算普通最小二乘，并核对 HTML 中的完整记录与 JSON。最终 150 行的配置结果指纹通过，两个场景的报告内嵌 PNG 均为 1800×900。")
 code("python tools/verify_export_evidence.py\npython tools/verify_export_evidence.py --scenario final")
 sub("尚未覆盖的部分")
-para("正式构建已在干净副本启动；独立浏览器复验受测试环境访问权限限制，未完成。本文真实浏览器流程证据来自开发服务，未将它写成正式服务的实测结果。")
+para("正式构建已在干净副本启动。本文的实际浏览器操作记录来自 v1.0.0 开发服务。v1.0.1 通过构建与算法检查，新界面和正式服务的浏览器复验受到测试环境访问权限限制。")
 para("未完成多浏览器、所有移动设备、所有编码/Excel 组合及超大文件压力验证。未将算法单元测试称作完整端到端测试。", "small")
 
 title("工程取舍与使用边界", "14 · 让实现复杂度与本科实验表格场景相称")
@@ -313,7 +314,7 @@ def decorate(canvas, doc):
     canvas.drawString(45, A4[1] - 25, "LabLens")
     canvas.setFillColor(MUTED)
     canvas.setFont("Deng", 8)
-    canvas.drawRightString(A4[0] - 45, A4[1] - 25, "项目技术文档 / v1.0.0")
+    canvas.drawRightString(A4[0] - 45, A4[1] - 25, f"项目技术文档 / v{VERSION}")
     canvas.line(45, 34, A4[0] - 45, 34)
     canvas.drawString(45, 21, "实验数据体检与可视化工作台")
     canvas.setFont("Mono", 8)

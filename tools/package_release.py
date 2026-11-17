@@ -74,7 +74,7 @@ def main():
     heads = git("bundle", "list-heads", str(bundle)).decode("utf-8")
     assert f"{commit} refs/heads/main" in heads
     payload["LabLens-history.bundle"] = bundle.read_bytes()
-    metadata = {"project": "LabLens", "version": version, "sourceCommit": commit, "createdAt": datetime.now(timezone.utc).isoformat(), "source": "Clean Git archive plus freshly built dist", "pdfPages": 16, "runtime": "Node.js >=22.18; Start-LabLens.cmd or npm start", "offlineHistoryRestore": "git clone --branch main LabLens-history.bundle restored-source", "video": "Recorded by the participant using docs/recording-guide.md", "validationLimits": "Production browser recheck remains blocked by saved browser permissions; development UI flow, build, tests, saved exports and PDF were verified."}
+    metadata = {"project": "LabLens", "version": version, "sourceCommit": commit, "createdAt": datetime.now(timezone.utc).isoformat(), "source": "Clean Git archive plus freshly built dist", "pdfPages": 16, "runtime": "Node.js >=22.18; Start-LabLens.cmd or npm start", "offlineHistoryRestore": "git clone --branch main LabLens-history.bundle restored-source", "video": "Participant records the video using docs/recording-guide.md", "validationLimits": "Browser access settings blocked the revised interface recheck. Saved browser screenshots and exports are from v1.0.0. See docs/validation.md."}
     payload["release-info.json"] = json.dumps(metadata, ensure_ascii=False, indent=2).encode("utf-8")
     sums = {name: digest(data) for name, data in sorted(payload.items())}
     payload["SHA256SUMS.txt"] = "".join(f"{value}  {name}\n" for name, value in sums.items()).encode("utf-8")

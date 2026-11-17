@@ -14,7 +14,7 @@
 | 实际导出与验证 | `docs/evidence/`、`docs/validation.md` | 浏览器实际文件、独立统计核查和覆盖边界。 |
 | 视频 | 参赛者录制的 `LabLens-demo.mp4` | 5—8 分钟、1080p、至少 2 分钟实际 AI 协作过程。 |
 
-完整本地交付包、版本清单和校验和位于 `output/release/`，由 `tools/package_release.py` 从干净 Git 当前树和新构建 dist 生成。ZIP 内附离线 main 历史和逐文件校验和，已经完成实际读取与克隆核对；该目录不作为源码重复提交到 Git。
+当前交付包为 `output/release/LabLens-v1.0.1-submission.zip`。它包含源码、dist、技术文档、录屏指南、离线 main 历史和逐文件校验和。压缩包与版本清单由 `tools/package_release.py` 生成。
 
 ## 提交前由参赛者完成
 
